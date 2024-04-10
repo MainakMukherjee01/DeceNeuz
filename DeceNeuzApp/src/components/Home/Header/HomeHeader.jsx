@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsMedium } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { LiaEditSolid } from "react-icons/lia";
@@ -14,7 +14,31 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { toast } from "react-toastify";
 
+import NewsMint from "../../../../../DeceNeuzContracts/artifacts/contracts/NewsMint.sol/NewsMint.json";
+import { useContractStore } from "../../hooks/useContractStore";
+
+const contractAddress = import.meta.env.VITE_APP_CONTRACT_DEPLOYED_ADDRESS;
+const abi = NewsMint.abi;
+
 const HomeHeader = () => {
+  const {
+    account,
+    //signer,
+    //provider,
+    //contract,
+    connectWallet,
+    connectContract,
+    disconnect,
+  } = useContractStore();
+
+  const handleConnect = async () => {
+    await connectWallet();
+    await connectContract(contractAddress, abi);
+  };
+  const handleDisconnect = async () => {
+    await disconnect();
+  };
+
   const { allUsers, userLoading, currentUser, setPublish, title, description } =
     Blog();
   const [modal, setModal] = useState(false);
@@ -40,6 +64,7 @@ const HomeHeader = () => {
       navigate(`/post/${postId}`);
       toast.success("Post has been updated.");
     } catch (error) {
+      toast.error(error);
     } finally {
       setLoading(false);
     }
@@ -62,13 +87,34 @@ const HomeHeader = () => {
         <div className="flex items-center gap-3 sm:gap-7">
           <span
             onClick={() => setSearchModal(true)}
-            className="flex sm:hidden text-3xl text-gray-300 cursor-pointer">
+            className="flex sm:hidden text-3xl text-gray-300 cursor-pointer"
+          >
             <CiSearch />
           </span>
+
+          <div>
+            {!account ? (
+              <button
+                onClick={handleConnect}
+                className="btn !bg-green-700 !py-1 !text-white !rounded-full"
+              >
+                Connect Wallet
+              </button>
+            ) : (
+              <button
+                onClick={handleDisconnect}
+                className="btn !bg-red-700 !py-1 !text-white !rounded-full"
+              >
+                Disconnect
+              </button>
+            )}
+          </div>
+
           {pathname === "/write" ? (
             <button
               onClick={() => setPublish(true)}
-              className="btn !bg-green-700 !py-1 !text-white !rounded-full">
+              className="btn !bg-green-700 !py-1 !text-white !rounded-full"
+            >
               Publish
             </button>
           ) : editPath === "editPost" ? (
@@ -76,13 +122,15 @@ const HomeHeader = () => {
               onClick={handleEdit}
               className={`btn !bg-green-700 !py-1 !text-white !rounded-full
               ${loading ? "opacity-40" : ""}
-              `}>
+              `}
+            >
               {loading ? "Updating..." : "Save and Update"}
             </button>
           ) : (
             <Link
               to="/write"
-              className="hidden md:flex items-center gap-1 text-gray-500">
+              className="hidden md:flex items-center gap-1 text-gray-500"
+            >
               <span className="text-3xl">
                 <LiaEditSolid />
               </span>
@@ -106,7 +154,8 @@ const HomeHeader = () => {
               <div
                 className={`${
                   modal ? "visible opacity-100%" : "invisible opacity-0"
-                } transition-all duration-100`}>
+                } transition-all duration-100`}
+              >
                 <UserModal setModal={setModal} />
               </div>
             </Modal>

@@ -10,10 +10,21 @@ import Write from "./components/Home/Write/Write";
 import SinglePost from "./components/Common/Posts/SinglePost";
 import EditPost from "./components/Common/Posts/EditPost";
 import FilterPost from "./components/Demo/FilterPost";
+//import { useContractStore } from "./components/hooks/useContractStore";
+
+
 
 function App() {
+  //Frontend
   const { currentUser } = Blog();
-  console.log(import.meta.env.REACT_APP_API_KEY);
+  // const {
+  //   account,contract,signer,provider
+  // } = useContractStore();
+  // console.log({account});
+  // console.log({provider});
+  // console.log({signer});
+  // console.log({contract});
+
   return (
     <>
       {currentUser ? <HomeHeader /> : <DemoHeader />}
