@@ -14,7 +14,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { toast } from "react-toastify";
 
-import NewsMint from "../../../../../DeceNeuzContracts/artifacts/contracts/NewsMint.sol/NewsMint.json";
+import NewsMint from "../../../../../DeceNeuzContract/artifacts/contracts/NewsMint.sol/NewsMint.json";
 import { useContractStore } from "../../hooks/useContractStore";
 
 const contractAddress = import.meta.env.VITE_APP_CONTRACT_DEPLOYED_ADDRESS;

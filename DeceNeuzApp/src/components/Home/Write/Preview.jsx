@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/firebase";
 import { Blog } from "../../../Context/Context";
 import { useNavigate } from "react-router-dom";
+import { useContractStore } from "../../hooks/useContractStore";
 
 const Preview = ({ setPublish, description, title }) => {
   const imageRef = useRef(null);
@@ -23,6 +24,8 @@ const Preview = ({ setPublish, description, title }) => {
     photo: "",
   });
 
+  const { contract, signer } = useContractStore();
+
   useEffect(() => {
     if (title || description) {
       setPreview({ ...preview, title: title });
@@ -37,6 +40,7 @@ const Preview = ({ setPublish, description, title }) => {
     imageRef.current.click();
   };
 
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -48,6 +52,8 @@ const Preview = ({ setPublish, description, title }) => {
       if (preview.title.length < 15) {
         toast.error("Title must be at least 15 letters");
       }
+
+      
 
       const collections = collection(db, "posts");
 
@@ -67,7 +73,12 @@ const Preview = ({ setPublish, description, title }) => {
         postImg: url || "",
         created: Date.now(),
         pageViews: 0,
+        
       });
+      const tx = await contract.mint(preview.title, desc, currentUser?.uid);
+      await tx.wait();
+      console.log("NFT minted successfully!");
+    
       toast.success("Post has been added");
       navigate("/");
       setPublish(false);
@@ -75,7 +86,9 @@ const Preview = ({ setPublish, description, title }) => {
         title: "",
         photo: "",
       });
+      console.log({ signer });
     } catch (error) {
+      console.error("Error minting NFT:", error);
       toast.error(error.message);
     } finally {
       setLoading(false);
@@ -86,7 +99,8 @@ const Preview = ({ setPublish, description, title }) => {
       <div className="size my-[2rem]">
         <span
           onClick={() => setPublish(false)}
-          className="absolute right-[1rem] md:right-[5rem] top-[3rem] text-2xl cursor-pointer">
+          className="absolute right-[1rem] md:right-[5rem] top-[3rem] text-2xl cursor-pointer"
+        >
           <LiaTimesSolid />
         </span>
         {/* preview the text  */}
@@ -97,7 +111,8 @@ const Preview = ({ setPublish, description, title }) => {
               style={{ backgroundImage: `url(${imageUrl})` }}
               onClick={handleClick}
               className="w-full h-[200px] object-cover bg-gray-100 my-3 grid 
-                place-items-center cursor-pointer bg-cover bg-no-repeat ">
+                place-items-center cursor-pointer bg-cover bg-no-repeat "
+            >
               {!imageUrl && "Add Image"}
             </div>
             <input
@@ -127,8 +142,9 @@ const Preview = ({ setPublish, description, title }) => {
             />
             <p className="text-gray-500 pt-4 text-sm">
               <span className="font-bold">Note:</span> Changes here will affect
-              how your story appears in public places like DeceNeuz’s homepage and
-              in subscribers’ inboxes — not the contents of the story itself.
+              how your story appears in public places like DeceNeuz’s homepage
+              and in subscribers’ inboxes — not the contents of the story
+              itself.
             </p>
           </div>
           <div className="flex-[1] flex flex-col gap-4 mb-5 md:mb-0">
@@ -143,7 +159,8 @@ const Preview = ({ setPublish, description, title }) => {
             <TagsInput value={tags} onChange={setTags} />
             <button
               onClick={handleSubmit}
-              className="btn !bg-green-800 !w-fit !text-white !rounded-full">
+              className="btn !bg-green-800 !w-fit !text-white !rounded-full"
+            >
               {loading ? "Submitting..." : "Publish Now"}
             </button>
           </div>
