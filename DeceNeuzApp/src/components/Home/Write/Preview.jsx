@@ -40,7 +40,6 @@ const Preview = ({ setPublish, description, title }) => {
     imageRef.current.click();
   };
 
-
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -52,8 +51,6 @@ const Preview = ({ setPublish, description, title }) => {
       if (preview.title.length < 15) {
         toast.error("Title must be at least 15 letters");
       }
-
-      
 
       const collections = collection(db, "posts");
 
@@ -73,12 +70,11 @@ const Preview = ({ setPublish, description, title }) => {
         postImg: url || "",
         created: Date.now(),
         pageViews: 0,
-        
       });
       const tx = await contract.mint(preview.title, desc, currentUser?.uid);
       await tx.wait();
       console.log("NFT minted successfully!");
-    
+
       toast.success("Post has been added");
       navigate("/");
       setPublish(false);
@@ -159,7 +155,7 @@ const Preview = ({ setPublish, description, title }) => {
             <TagsInput value={tags} onChange={setTags} />
             <button
               onClick={handleSubmit}
-              className="btn !bg-green-800 !w-fit !text-white !rounded-full"
+              className="btn !bg-orange-800 !w-fit !text-white !rounded-full"
             >
               {loading ? "Submitting..." : "Publish Now"}
             </button>

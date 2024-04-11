@@ -10,13 +10,13 @@ const Trending = () => {
   const getTrending =
     postData && postData?.sort((a, b) => b.pageViews - a.pageViews);
   return (
-    <section className="border-b border-gray-600">
-      <div className="size py-[2rem]">
+    <section className="">
+      <div className="size py-[2rem] space-y-8">
         <div className="flex items-center gap-3 font-semibold">
           <span>
             <BsGraphUpArrow />
           </span>
-          <h2>Trending on DeceNeuz</h2>
+          <h2 className="text-2xl">Trending Articles on DeceNeuz</h2>
         </div>
         <div className="grid grid-cols-card gap-3">
           {getTrending &&
@@ -34,13 +34,14 @@ export default Trending;
 const Trend = ({ trend, index }) => {
   const navigate = useNavigate();
   return (
-    <main className="flex gap-4 w-full">
-      <span className="text-gray-400 text-4xl mt-4">{index + 1}</span>
-      <div className="py-6 flex flex-col gap-3">
+    <main className="flex gap-4 w-full border rounded-md p-4">
+      <span className="text-orange-400 text-4xl">{index + 1}</span>
+      <div className=" flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <div
             onClick={() => navigate(`/profile/${trend?.userId}`)}
-            className="flex items-center gap-2 cursor-pointer hover:opacity-75">
+            className="flex items-center gap-2 cursor-pointer hover:opacity-75"
+          >
             <img
               className="w-[1.3rem] h-[1.3rem] object-cover rounded-full"
               src={trend?.userImg}
@@ -53,7 +54,8 @@ const Trend = ({ trend, index }) => {
         </div>
         <div
           onClick={() => navigate(`/post/${trend?.id}`)}
-          className="flex flex-col gap-4 cursor-pointer hover:opacity-75">
+          className="flex flex-col gap-4 cursor-pointer hover:opacity-75"
+        >
           <p className="w-full md:w-[18rem] text-md font-bold line-clamp-2">
             {trend.title}
           </p>

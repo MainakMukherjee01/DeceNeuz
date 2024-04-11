@@ -13,10 +13,11 @@ const PostsCard = ({ post }) => {
   const navigate = useNavigate();
 
   return (
-    <section>
+    <section className="border py-4 px-6 rounded-md">
       <div
         onClick={() => navigate(`/post/${postId}`)}
-        className="flex flex-col sm:flex-row gap-4 cursor-pointer">
+        className="flex flex-col sm:flex-row gap-4 cursor-pointer"
+      >
         <div className="flex-[2.5]">
           <p className="pb-2 font-semibold capitalize">{username}</p>
           <h2 className="text-xl font-bold line-clamp-2 leading-6 capitalize">

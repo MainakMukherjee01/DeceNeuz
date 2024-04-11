@@ -10,6 +10,7 @@ import EditProfile from "./EditProfile";
 import { Blog } from "../../../Context/Context";
 import { useParams } from "react-router-dom";
 import useSingleFetch from "../../hooks/useSingleFetch";
+import { useContractStore } from "../../hooks/useContractStore";
 
 const Profile = () => {
   const { allUsers, currentUser } = Blog();
@@ -31,6 +32,8 @@ const Profile = () => {
   const [currentActive, setCurrentActive] = useState(activities[0]);
   const [modal, setModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+
+  const { account } = useContractStore();
 
   const getUserData = allUsers.find((user) => user.id === userId);
 
@@ -62,7 +65,8 @@ const Profile = () => {
                 ? "border-b border-gray-500"
                 : ""
             }
-            `}>
+            `}
+            >
               <button onClick={() => setCurrentActive(item)}>
                 {item.title}
               </button>
@@ -78,7 +82,8 @@ const Profile = () => {
       <button
         onClick={() => setModal(true)}
         className="fixed top-[8rem] right-0 w-[2rem] h-[2rem] bg-black text-white
-        grid place-items-center md:hidden">
+        grid place-items-center md:hidden"
+      >
         <IoSettingsSharp />
       </button>
       {/* user details  */}
@@ -87,12 +92,14 @@ const Profile = () => {
           className={`flex-[1] border-l border-gray-300 p-[2rem] z-10
         fixed right-0 bottom-0 top-0 w-[18rem] bg-white md:sticky
         ${modal ? "translate-x-0" : "translate-x-[100%] md:translate-x-0"}
-        transition-all duration-500`}>
+        transition-all duration-500`}
+        >
           {/* icons to close out modal  */}
           <div className="pb-4 text-right">
             <button
               onClick={() => setModal(false)}
-              className="inline-block md:hidden">
+              className="inline-block md:hidden"
+            >
               <LiaTimesSolid />
             </button>
           </div>
@@ -107,23 +114,20 @@ const Profile = () => {
               {getUserData?.username}
             </h2>
             <p className="text-gray-500 first-letter:uppercase text-sm">
+              Connected Wallet: {account}
+            </p>
+            <p className="text-gray-500 first-letter:uppercase text-sm">
               {getUserData?.bio}
             </p>
+
             {currentUser?.uid === getUserData?.userId && (
               <button
                 onClick={() => setEditModal(true)}
-                className="text-green-700 pt-6 text-sm w-fit">
+                className="text-orange-700 pt-6 text-sm w-fit"
+              >
                 Edit Profile
               </button>
             )}
-            {/* nav  */}
-            <div className="flex-[1] flex items-center flex-wrap gap-3 pt-8">
-              {discoverActions.map((item) => (
-                <button key={item} className="text-xs text-black1">
-                  {item}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </Modal>

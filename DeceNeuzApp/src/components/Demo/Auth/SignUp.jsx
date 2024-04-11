@@ -70,16 +70,18 @@ const SignUp = ({ setSignReq, setModal }) => {
           title="rePassword"
         />
         <button
-          className={`px-4 py-1 text-sm rounded-full bg-green-700
-        hover:bg-green-800 text-white w-fit mx-auto
-        ${loading ? "opacity-50 pointer-events-none" : ""}`}>
+          className={`px-4 py-1 text-sm rounded-full bg-orange-700
+        hover:bg-orange-800 text-white w-fit mx-auto
+        ${loading ? "opacity-50 pointer-events-none" : ""}`}
+        >
           Sign Up
         </button>
       </form>
       <button
         onClick={() => setSignReq("")}
-        className="mt-5 text-sm text-green-600 hover:text-green-700
-      flex items-center mx-auto">
+        className="mt-5 text-sm text-orange-600 hover:text-orange-700
+      flex items-center mx-auto"
+      >
         <MdKeyboardArrowLeft />
         All sign Up Options
       </button>

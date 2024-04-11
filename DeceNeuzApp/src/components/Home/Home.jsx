@@ -1,6 +1,7 @@
 import React from "react";
 import Posts from "../Common/Posts/Posts";
 import Follow from "./UserToFollow/Follow";
+import Trending from "../Demo/Trending";
 
 const Home = () => {
   return (

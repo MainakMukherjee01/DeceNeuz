@@ -17,7 +17,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
     bio: "",
   });
 
-  const btn = "border border-green-600 py-2 px-5 rounded-full text-green-600";
+  const btn = "border border-orange-600 py-2 px-5 rounded-full text-orange-600";
   const openFile = () => {
     imgRef.current.click();
   };
@@ -65,7 +65,8 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
     <Modal modal={editModal} setModal={setEditModal}>
       <div
         className="center w-[95%] md:w-[45rem] bg-white mx-auto shadows
-        my-[1rem] z-20 mb-[3rem] p-[2rem]">
+        my-[1rem] z-20 mb-[3rem] p-[2rem]"
+      >
         {/* head  */}
         <div className="flex items-center justify-between">
           <h2 className="font-bold text-xl">Profile Information</h2>
@@ -98,7 +99,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
             </div>
             <div>
               <div className="flex gap-4 text-sm">
-                <button onClick={openFile} className="text-green-600">
+                <button onClick={openFile} className="text-orange-600">
                   Update
                 </button>
                 <button className="text-red-600">Remove</button>
@@ -152,9 +153,10 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
           </button>
           <button
             onClick={saveForm}
-            className={`${btn} bg-green-800 text-white ${
+            className={`${btn} bg-orange-800 text-white ${
               loading ? "opacity-50" : ""
-            }`}>
+            }`}
+          >
             Save
           </button>
         </div>

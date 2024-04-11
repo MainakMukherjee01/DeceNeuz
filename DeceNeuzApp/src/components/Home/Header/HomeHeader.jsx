@@ -76,10 +76,12 @@ const HomeHeader = () => {
       <div className="size h-[60px] flex items-center justify-between">
         {/* left side  */}
         <div className="flex items-center gap-3">
-          <Link to={"/"}>
-            <span className="text-5xl">
-              <BsMedium />
-            </span>
+          <Link to={"/home"}>
+            <img
+              className="h-[1.2rem]"
+              src="DECENEUZ.png"
+              alt="DeceNeuz Logo"
+            />
           </Link>
           <Search modal={searchModal} setModal={setSearchModal} />
         </div>
@@ -96,7 +98,7 @@ const HomeHeader = () => {
             {!account ? (
               <button
                 onClick={handleConnect}
-                className="btn !bg-green-700 !py-1 !text-white !rounded-full"
+                className="btn !bg-orange-500 !py-1 !text-white !rounded-full"
               >
                 Connect Wallet
               </button>
@@ -113,14 +115,14 @@ const HomeHeader = () => {
           {pathname === "/write" ? (
             <button
               onClick={() => setPublish(true)}
-              className="btn !bg-green-700 !py-1 !text-white !rounded-full"
+              className="btn !bg-orange-500 !py-1 !text-white !rounded-full"
             >
               Publish
             </button>
           ) : editPath === "editPost" ? (
             <button
               onClick={handleEdit}
-              className={`btn !bg-green-700 !py-1 !text-white !rounded-full
+              className={`btn !bg-orange-500 !py-1 !text-white !rounded-full
               ${loading ? "opacity-40" : ""}
               `}
             >
@@ -129,17 +131,14 @@ const HomeHeader = () => {
           ) : (
             <Link
               to="/write"
-              className="hidden md:flex items-center gap-1 text-gray-500"
+              className="hidden md:flex items-center gap-1 text-orange-500 border border-orange-500 rounded-full px-3"
             >
-              <span className="text-3xl">
+              <span className="text-2xl">
                 <LiaEditSolid />
               </span>
-              <span className="text-sm mt-2">Write</span>
+              <span className="text-sm">Write</span>
             </Link>
           )}
-          <span className="text-3xl text-gray-500 cursor-pointer">
-            <IoMdNotificationsOutline />
-          </span>
           <div className="flex items-center relative">
             <img
               onClick={() => setModal(true)}
